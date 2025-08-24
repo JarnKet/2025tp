@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS Sun Animation (No JS)</title>
+    <style>
+      :root {
+        --size: 120px; /* Sun wrapper size */
+        --speed-x: 8s; /* Horizontal bounce duration */
+        --speed-y: 6s; /* Vertical bounce duration */
+        --spin: 3s; /* Full rotation per 3 seconds */
+      }
+
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      /* Stage fills screen */
+      .stage {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        height: 100vh;
+        width: 100vw;
+      }
+
+      /* X movement */
+      .move-x {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: var(--size);
+        height: var(--size);
+        animation: move-x var(--speed-x) linear infinite alternate;
+      }
+
+      /* Y movement */
+      .move-y {
+        width: var(--size);
+        height: var(--size);
+        animation: move-y var(--speed-y) linear infinite alternate;
+      }
+
+      /* Sun wrapper with rotation */
+      .sun {
+        position: relative;
+        width: var(--size);
+        height: var(--size);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: spin var(--spin) linear infinite;
+      }
+
+      /* Center circle */
+      .sun .center {
+        width: 40px;
+        height: 40px;
+        border: 3px solid black;
+        border-radius: 50%;
+        background: white;
+        position: absolute;
+        z-index: 2;
+      }
+
+      /* Rays */
+      .ray {
+        position: absolute;
+        width: 0;
+        height: 0;
+        top: 50%;
+        left: 50%;
+        transform-origin: 0 0;
+      }
+      .ray::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 25px solid white;
+        transform: translate(-50%, -25px);
+      }
+      .ray::before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 27px solid black;
+        transform: translate(-50%, -26px);
+        z-index: -1;
+      }
+
+      /* Place 8 rays around the circle */
+      .ray:nth-child(2) {
+        transform: translate(-50%, -50%) rotate(0deg) translateY(-42px);
+      }
+      .ray:nth-child(3) {
+        transform: translate(-50%, -50%) rotate(45deg) translateY(-42px);
+      }
+      .ray:nth-child(4) {
+        transform: translate(-50%, -50%) rotate(90deg) translateY(-42px);
+      }
+      .ray:nth-child(5) {
+        transform: translate(-50%, -50%) rotate(135deg) translateY(-42px);
+      }
+      .ray:nth-child(6) {
+        transform: translate(-50%, -50%) rotate(180deg) translateY(-42px);
+      }
+      .ray:nth-child(7) {
+        transform: translate(-50%, -50%) rotate(225deg) translateY(-42px);
+      }
+      .ray:nth-child(8) {
+        transform: translate(-50%, -50%) rotate(270deg) translateY(-42px);
+      }
+      .ray:nth-child(9) {
+        transform: translate(-50%, -50%) rotate(315deg) translateY(-42px);
+      }
+
+      /* Animations */
+      @keyframes move-x {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(calc(100vw - var(--size)));
+        }
+      }
+      @keyframes move-y {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(calc(100vh - var(--size)));
+        }
+      }
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <div class="move-x">
+        <div class="move-y">
+          <div class="sun">
+            <div class="center"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

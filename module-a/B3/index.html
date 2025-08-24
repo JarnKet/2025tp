@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Clock</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .clock-container {
+        padding: 40px;
+      }
+
+      .clock-display {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .digit {
+        width: 80px;
+        height: 120px;
+        position: relative;
+        margin: 0 5px;
+      }
+
+      .segment {
+        position: absolute;
+        background: #ff0000;
+        transition: opacity 0.1s ease;
+      }
+
+      .segment.off {
+        opacity: 0.1;
+        background: #ffcccc;
+      }
+
+      /* Horizontal segments */
+      .segment-a,
+      .segment-d,
+      .segment-g {
+        width: 60px;
+        height: 8px;
+        border-radius: 4px;
+        left: 10px;
+      }
+
+      .segment-a {
+        top: 0;
+      }
+      .segment-d {
+        bottom: 0;
+      }
+      .segment-g {
+        top: 56px;
+      }
+
+      /* Vertical segments */
+      .segment-b,
+      .segment-c,
+      .segment-e,
+      .segment-f {
+        width: 8px;
+        height: 50px;
+        border-radius: 4px;
+      }
+
+      .segment-b {
+        top: 5px;
+        right: 0;
+      }
+      .segment-c {
+        bottom: 5px;
+        right: 0;
+      }
+      .segment-e {
+        bottom: 5px;
+        left: 0;
+      }
+      .segment-f {
+        top: 5px;
+        left: 0;
+      }
+
+      .separator {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        height: 120px;
+        width: 20px;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        background: #ff0000;
+        border-radius: 50%;
+        transition: opacity 0.1s ease;
+      }
+
+      .dot.blink {
+        opacity: 0.1;
+      }
+
+      .time-group {
+        display: flex;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="clock-container">
+      <div class="clock-display" id="clockDisplay">
+        <!-- Clock digits will be generated here -->
+      </div>
+    </div>
+
+    <script>
+      class DigitalClock {
+        constructor() {
+          this.clockDisplay = document.getElementById("clockDisplay");
+          this.digitPatterns = {
+            0: ["a", "b", "c", "d", "e", "f"],
+            1: ["b", "c"],
+            2: ["a", "b", "g", "e", "d"],
+            3: ["a", "b", "g", "c", "d"],
+            4: ["f", "g", "b", "c"],
+            5: ["a", "f", "g", "c", "d"],
+            6: ["a", "f", "g", "e", "d", "c"],
+            7: ["a", "b", "c"],
+            8: ["a", "b", "c", "d", "e", "f", "g"],
+            9: ["a", "b", "c", "d", "f", "g"],
+          };
+          this.init();
+          this.startClock();
+        }
+
+        init() {
+          this.clockDisplay.innerHTML = "";
+
+          // Create hour digits
+          const hourGroup = document.createElement("div");
+          hourGroup.className = "time-group";
+          hourGroup.appendChild(this.createDigit("hour-tens"));
+          hourGroup.appendChild(this.createDigit("hour-ones"));
+
+          // Create first separator
+          const separator1 = document.createElement("div");
+          separator1.className = "separator";
+          separator1.innerHTML =
+            '<div class="dot" id="dot1"></div><div class="dot" id="dot2"></div>';
+
+          // Create minute digits
+          const minuteGroup = document.createElement("div");
+          minuteGroup.className = "time-group";
+          minuteGroup.appendChild(this.createDigit("minute-tens"));
+          minuteGroup.appendChild(this.createDigit("minute-ones"));
+
+          // Create second separator
+          const separator2 = document.createElement("div");
+          separator2.className = "separator";
+          separator2.innerHTML =
+            '<div class="dot" id="dot3"></div><div class="dot" id="dot4"></div>';
+
+          // Create second digits
+          const secondGroup = document.createElement("div");
+          secondGroup.className = "time-group";
+          secondGroup.appendChild(this.createDigit("second-tens"));
+          secondGroup.appendChild(this.createDigit("second-ones"));
+
+          // Append all groups
+          this.clockDisplay.appendChild(hourGroup);
+          this.clockDisplay.appendChild(separator1);
+          this.clockDisplay.appendChild(minuteGroup);
+          this.clockDisplay.appendChild(separator2);
+          this.clockDisplay.appendChild(secondGroup);
+        }
+
+        createDigit(id) {
+          const digit = document.createElement("div");
+          digit.className = "digit";
+          digit.id = id;
+
+          const segments = ["a", "b", "c", "d", "e", "f", "g"];
+          segments.forEach((segment) => {
+            const segmentEl = document.createElement("div");
+            segmentEl.className = `segment segment-${segment} off`;
+            digit.appendChild(segmentEl);
+          });
+
+          return digit;
+        }
+
+        displayDigit(digitId, number) {
+          const digit = document.getElementById(digitId);
+          const segments = digit.querySelectorAll(".segment");
+          const activeSegments = this.digitPatterns[number];
+
+          segments.forEach((segment, index) => {
+            const segmentLetter = ["a", "b", "c", "d", "e", "f", "g"][index];
+            if (activeSegments.includes(segmentLetter)) {
+              segment.classList.remove("off");
+            } else {
+              segment.classList.add("off");
+            }
+          });
+        }
+
+        updateClock() {
+          const now = new Date();
+          const hours = now.getHours().toString().padStart(2, "0");
+          const minutes = now.getMinutes().toString().padStart(2, "0");
+          const seconds = now.getSeconds().toString().padStart(2, "0");
+
+          // Update digits
+          this.displayDigit("hour-tens", parseInt(hours[0]));
+          this.displayDigit("hour-ones", parseInt(hours[1]));
+          this.displayDigit("minute-tens", parseInt(minutes[0]));
+          this.displayDigit("minute-ones", parseInt(minutes[1]));
+          this.displayDigit("second-tens", parseInt(seconds[0]));
+          this.displayDigit("second-ones", parseInt(seconds[1]));
+
+          // Blink only the second separator (minute:second)
+          const secondSeparatorDots = [
+            document.getElementById("dot3"),
+            document.getElementById("dot4"),
+          ];
+          const shouldBlink = now.getMilliseconds() < 500;
+
+          secondSeparatorDots.forEach((dot) => {
+            if (shouldBlink) {
+              dot.classList.add("blink");
+            } else {
+              dot.classList.remove("blink");
+            }
+          });
+
+          // Keep hour:minute separator always visible (no blinking)
+          const hourMinuteDots = [
+            document.getElementById("dot1"),
+            document.getElementById("dot2"),
+          ];
+          hourMinuteDots.forEach((dot) => {
+            dot.classList.remove("blink");
+          });
+        }
+
+        startClock() {
+          this.updateClock();
+          setInterval(() => {
+            this.updateClock();
+          }, 100); // Update every 100ms for smooth blinking
+        }
+      }
+
+      // Initialize the clock when the page loads
+      window.addEventListener("DOMContentLoaded", () => {
+        new DigitalClock();
+      });
+    </script>
+  </body>
+</html>

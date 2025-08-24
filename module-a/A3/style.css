@@ -1,0 +1,46 @@
+/* Write your styles below */
+/* Write your styles below */
+
+/* Reset and center the page */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+/* Five-pointed star using clip-path */
+.star {
+    width: 500px;
+    height: 500px;
+    background-color: #FCD116;
+    clip-path: polygon(50% 0%,
+            /* Top point */
+            61% 35%,
+            /* Upper right inner */
+            98% 35%,
+            /* Right point */
+            68% 57%,
+            /* Lower right inner */
+            79% 91%,
+            /* Bottom right point */
+            50% 70%,
+            /* Bottom inner */
+            21% 91%,
+            /* Bottom left point */
+            32% 57%,
+            /* Lower left inner */
+            2% 35%,
+            /* Left point */
+            39% 35%
+            /* Upper left inner */
+        );
+}

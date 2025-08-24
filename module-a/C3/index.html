@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Upload</title>
+  <style>
+    #progress-bar { width: 100%; background: #f3f3f3; }
+    #progress { height: 20px; width: 0; background: #4CAF50; color: white; text-align: center; line-height: 20px; }
+  </style>
+</head>
+<body>
+  <div id="drag-area" style="border: 2px dashed #000; padding: 50px; text-align: center;">Drag & Drop or Select Files</div>
+  <div id="progress-bar"><div id="progress">0%</div></div>
+
+  <script>
+    const dragArea = document.getElementById('drag-area');
+    const progress = document.getElementById('progress');
+    dragArea.addEventListener('click', () => document.querySelector('input').click());
+    dragArea.addEventListener('dragover', e => e.preventDefault());
+    dragArea.addEventListener('drop', handleDrop);
+
+    function handleDrop(event) {
+      event.preventDefault();
+      const files = event.dataTransfer.files;
+      const formData = new FormData();
+      for (const file of files) formData.append('files', file);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://localhost:3000/upload', true);
+      xhr.upload.onprogress = e => e.lengthComputable && (progress.style.width = `${(e.loaded / e.total) * 100}%`);
+      xhr.onload = () => alert('Upload complete!');
+      xhr.send(formData);
+    }
+  </script>
+  <input type="file" style="display:none;">
+</body>
+</html>

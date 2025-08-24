@@ -1,0 +1,1 @@
+- Where is media picture file? or in the workstation have preset image?

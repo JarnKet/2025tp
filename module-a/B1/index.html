@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Statistics Counter</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 40px;
+        font-family: "Arial", sans-serif;
+        background-color: #f8f9fa;
+        min-height: 100vh;
+      }
+
+      .stats-container {
+        text-align: left;
+        background: transparent;
+        padding: 0;
+        max-width: none;
+      }
+
+      .counter-number {
+        font-size: 4.5rem;
+        font-weight: bold;
+        color: #000000;
+        margin-bottom: 15px;
+        letter-spacing: -1px;
+        line-height: 1;
+      }
+
+      .counter-label {
+        font-size: 1.8rem;
+        color: #666666;
+        font-weight: normal;
+        letter-spacing: 0.5px;
+      }
+
+      .stats-item {
+        margin: 40px 0;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .counter-number {
+          font-size: 2.5rem;
+        }
+        .counter-label {
+          font-size: 1.2rem;
+        }
+        .stats-container {
+          padding: 40px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stats-container">
+      <div class="stats-item">
+        <div class="counter-number" id="counter">2,545,992,400</div>
+        <div class="counter-label">Newspapers circulated today</div>
+      </div>
+    </div>
+
+    <script>
+      function animateCounter(element, targetNumber, duration = 3000) {
+        const startTime = performance.now();
+        const startNumber = 2545992400;
+
+        function updateCounter(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+
+          // Easing function for smooth animation
+          const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+
+          const currentNumber = Math.floor(
+            startNumber + (targetNumber - startNumber) * easeOutQuart
+          );
+
+          // Format number with commas
+          element.textContent = currentNumber.toLocaleString();
+
+          if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            // Ensure final number is exactly the target
+            element.textContent = targetNumber.toLocaleString();
+          }
+        }
+
+        requestAnimationFrame(updateCounter);
+      }
+
+      // Start animation when page loads
+      window.addEventListener("load", () => {
+        const counterElement = document.getElementById("counter");
+        const targetNumber = 2546242350;
+
+        // Start animation after a short delay
+        setTimeout(() => {
+          animateCounter(counterElement, targetNumber, 3000);
+        }, 500);
+      });
+
+      // Optional: Restart animation on click
+      document.getElementById("counter").addEventListener("click", () => {
+        const counterElement = document.getElementById("counter");
+        const targetNumber = 2546242350;
+        animateCounter(counterElement, targetNumber, 3000);
+      });
+    </script>
+  </body>
+</html>

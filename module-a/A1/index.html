@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A1: 4‑Corners Image — Hover Split</title>
+    <style>
+      /*
+      A1: 4‑Corners Image (Easy)
+      — Single-file, framework‑free, production‑ready snippet.
+      — Swap the image via the --img variable below.
+      — Adjust --size for component size and --gap for split distance.
+    */
+
+      :root {
+        /* Demo image (royalty-free placeholder). Replace with your asset path. */
+        --img: url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop");
+        --size: 360px; /* component width (square via aspect-ratio) */
+        --gap: 16px; /* how far corners fly out on hover/focus */
+        --radius: 18px; /* rounding for a soft card look */
+        --shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        --speed: 380ms; /* motion duration */
+        --ease: cubic-bezier(0.22, 1, 0.36, 1); /* ease-out expo-ish */
+        --outline: 3px solid rgba(99, 102, 241, 0.55); /* focus ring */
+        --bg: #0b1020; /* page background (demo) */
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        display: grid;
+        place-items: center;
+        background: radial-gradient(
+          1200px 600px at 50% 0%,
+          #111633 0%,
+          var(--bg) 55%
+        );
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        color: #e6e9ef;
+      }
+
+      .wrap {
+        display: grid;
+        gap: 18px;
+        justify-items: center;
+      }
+      .title {
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
+      .hint {
+        opacity: 0.7;
+        font-size: 0.9rem;
+      }
+
+      /* Component */
+      .split {
+        position: relative;
+        width: var(--size);
+        aspect-ratio: 1 / 1; /* Perfect square */
+        border-radius: var(--radius);
+        filter: drop-shadow(var(--shadow));
+        outline: none; /* we’ll draw a nicer custom focus ring */
+        /* Make the whole thing keyboard-focusable for accessibility */
+      }
+      .split:focus-visible {
+        outline: var(--outline);
+        outline-offset: 6px;
+      }
+
+      .quad {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        background-image: var(--img);
+        background-size: 200% 200%;
+        background-repeat: no-repeat;
+        transition: transform var(--speed) var(--ease),
+          box-shadow var(--speed) var(--ease);
+        will-change: transform;
+      }
+
+      /* Natural corner placement + individual rounding */
+      .quad.tl {
+        left: 0;
+        top: 0;
+        background-position: left top;
+        border-top-left-radius: var(--radius);
+      }
+      .quad.tr {
+        right: 0;
+        top: 0;
+        background-position: right top;
+        border-top-right-radius: var(--radius);
+      }
+      .quad.bl {
+        left: 0;
+        bottom: 0;
+        background-position: left bottom;
+        border-bottom-left-radius: var(--radius);
+      }
+      .quad.br {
+        right: 0;
+        bottom: 0;
+        background-position: right bottom;
+        border-bottom-right-radius: var(--radius);
+      }
+
+      /* Hover/focus interaction — split outward */
+      .split:is(:hover, :focus-within) .quad.tl {
+        transform: translate(calc(-1 * var(--gap)), calc(-1 * var(--gap)));
+      }
+      .split:is(:hover, :focus-within) .quad.tr {
+        transform: translate(var(--gap), calc(-1 * var(--gap)));
+      }
+      .split:is(:hover, :focus-within) .quad.bl {
+        transform: translate(calc(-1 * var(--gap)), var(--gap));
+      }
+      .split:is(:hover, :focus-within) .quad.br {
+        transform: translate(var(--gap), var(--gap));
+      }
+
+      /* Optional: subtle lift on each quad for depth */
+      .split:is(:hover, :focus-within) .quad {
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+      }
+
+      /* Optional label (non-essential) */
+      .badge {
+        position: absolute;
+        inset: auto 10px 10px auto;
+        background: rgba(17, 24, 39, 0.7);
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        backdrop-filter: blur(6px);
+      }
+
+      /* Small/large quick variants (just change custom props) */
+      .split.small {
+        --size: 260px;
+        --gap: 12px;
+      }
+      .split.large {
+        --size: 480px;
+        --gap: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <h1 class="title">A1 · 4‑Corners Image</h1>
+      <p class="hint">
+        Hover or press <kbd>Tab</kbd> to focus, then <kbd>Space</kbd>/<kbd
+          >Enter</kbd
+        >
+        isn’t required — focus alone triggers the split for keyboard users.
+      </p>
+
+      <!-- Demo #1: default size, swap --img to use your own image path -->
+      <section
+        class="split"
+        tabindex="0"
+        style="
+          --img: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop');
+        "
+      >
+        <div class="quad tl" aria-hidden="true"></div>
+        <div class="quad tr" aria-hidden="true"></div>
+        <div class="quad bl" aria-hidden="true"></div>
+        <div class="quad br" aria-hidden="true"></div>
+        <span class="badge">Hover me</span>
+      </section>
+
+      <!-- Quick usage notes (kept inside the file for handover) -->
+      <!--
+      HOW TO USE IN YOUR PROJECT
+      1) Copy the .split element and its 4 .quad children into your page.
+      2) Set the image with the inline style: style="--img: url('/path/to/your.jpg')".
+      3) Optionally tweak:
+         — --size to resize the component (it stays perfectly square)
+         — --gap for how far corners move on interaction
+         — --radius for rounding intensity
+         — --speed / --ease for motion feel
+      4) Keyboard access: the component is focusable (tabindex="0").
+         Focus (without pressing keys) triggers the same visual split via :focus-within.
+    --></main>
+  </body>
+</html>

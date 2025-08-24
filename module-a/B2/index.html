@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Decode Ways with Wildcard</title>
+  </head>
+  <body>
+    <h1>Decode Ways Calculator</h1>
+    <input
+      id="inputString"
+      type="text"
+      placeholder="Enter digits and * (e.g. *1)"
+    />
+    <button onclick="calculate()">Calculate</button>
+    <div id="result"></div>
+
+    <script>
+      function numDecodings(s) {
+        const MOD = 1e9 + 7;
+        const n = s.length;
+        if (n === 0) return 0;
+
+        let dp1 = 1; // dp[0] = 1
+        let dp2 = waysSingle(s[0]); // dp[1]
+
+        for (let i = 1; i < n; i++) {
+          let cur = (waysSingle(s[i]) * dp2) % MOD;
+          cur = (cur + ((waysDouble(s[i - 1], s[i]) * dp1) % MOD)) % MOD;
+
+          dp1 = dp2;
+          dp2 = cur;
+        }
+
+        return dp2;
+
+        function waysSingle(ch) {
+          if (ch === "0") return 0;
+          if (ch === "*") return 9;
+          return 1;
+        }
+
+        function waysDouble(c1, c2) {
+          if (c1 === "*" && c2 === "*") return 15;
+
+          if (c1 === "*") {
+            if (c2 >= "0" && c2 <= "6") return 2;
+            if (c2 >= "7" && c2 <= "9") return 1;
+            return 0;
+          }
+
+          if (c2 === "*") {
+            if (c1 === "1") return 9;
+            if (c1 === "2") return 6;
+            return 0;
+          }
+
+          const num = parseInt(c1 + c2, 10);
+          return num >= 10 && num <= 26 ? 1 : 0;
+        }
+      }
+
+      function calculate() {
+        const input = document.getElementById("inputString").value.trim();
+        if (!input) {
+          document.getElementById("result").textContent =
+            "⚠️ Please enter a string!";
+          return;
+        }
+        const result = numDecodings(input);
+        document.getElementById("result").textContent =
+          "Number of Decodings: " + result;
+      }
+    </script>
+  </body>
+</html>
