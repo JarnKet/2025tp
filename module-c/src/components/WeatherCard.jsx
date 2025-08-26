@@ -30,10 +30,10 @@ export default function WeatherCard({ weather }) {
     } else if (date.toDateString() === tomorrow.toDateString()) {
       return "Tomorrow";
     } else {
-      return date.toLocaleDateString('en-US', { 
-        weekday: 'short', 
-        month: 'short', 
-        day: 'numeric' 
+      return date.toLocaleDateString('en-US', {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric'
       });
     }
   };
@@ -44,13 +44,13 @@ export default function WeatherCard({ weather }) {
         <h3 className="text-lg font-semibold text-gray-800">{location}</h3>
         <p className="text-sm text-gray-600">{formatDate(date)}</p>
       </div>
-      
+
       <div className="flex-1 flex items-center justify-center mb-4">
         <div className="weather-icon">
           {renderIcon()}
         </div>
       </div>
-      
+
       <div className="text-center">
         <p className="text-2xl font-bold text-gray-800">
           {lower_temperature}° - {upper_temperature}°C

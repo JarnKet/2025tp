@@ -39,7 +39,7 @@ export default function Weather() {
           Swipe left or right to see more days
         </p>
       </div>
-      
+
       <div className="overflow-hidden">
         <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-4 px-4">
           {weathers.length > 0 ? (
