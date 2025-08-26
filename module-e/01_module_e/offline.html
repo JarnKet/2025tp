@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Offline page</title>
+
+    <link rel="manifest" href="manifest.json" />
+
+    <meta
+      name="description"
+      content="A web page to promote Lyon to tourists."
+    />
+
+    <meta
+      name="keywords"
+      content="Lyon, Franch, World skills, Tourists, Attractions, Map attractions, Lyon Essential information"
+    />
+
+    <style>
+      .container {
+        max-width: 990px;
+        margin: 0 auto;
+        width: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .page-title {
+        text-align: center;
+        margin-top: 50px;
+        font-size: 3.5rem;
+        color: #333;
+      }
+
+      .secondary-title {
+        text-align: center;
+        margin-top: 25px;
+        font-size: 2rem;
+        color: #333;
+      }
+
+      .readItBtn {
+        padding: 1rem 2rem;
+        background-color: blue;
+        color: white;
+        font-weight: bold;
+      }
+
+      .error-text {
+        font-size: 14px;
+        color: rgb(149, 25, 25);
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="main-content">
+      <section id="offline" class="container">
+        <h1 class="page-title">Offline</h1>
+        <h2 class="secondary-title">Essential Information</h2>
+        <p>contact: 04 72 10 30 30</p>
+        <p>Address: Mairie de Lyon, 69205 Lyon cedex 01</p>
+        <button class="readItBtn">Read it loud</button>
+        <p class="error-text">
+          Currently you're in offline page, please check your internect
+          connection and try again
+        </p>
+      </section>
+    </main>
+
+    <script>
+      const text =
+        "contact: 04 72 10 30 30, Address: Mairie de Lyon, 69205 Lyon cedex 01";
+
+      function handleReadText(text) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = "fr-FR";
+        speechSynthesis.speak(utterance);
+      }
+
+      const readItButton = document.querySelector(".readItBtn");
+      readItButton.addEventListener("click", () => handleReadText(text));
+    </script>
+  </body>
+</html>

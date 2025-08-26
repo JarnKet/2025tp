@@ -21,7 +21,7 @@ export default function ThemeH() {
   return (
     <div className="w-full h-full bg-black">
       <div ref={photoSlideRef} className="w-full h-full relative">
-        
+
         {/* Simple zoom effect for the image */}
         <div className="w-full h-full flex items-center justify-center">
           <img
