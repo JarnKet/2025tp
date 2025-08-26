@@ -16,9 +16,9 @@ import { setCurrentPhotoIndex } from "./features/photo-slide/action";
 import { useEffect } from "react";
 import ThemeB from "./components/Themes/ThemeB";
 import ThemeC from "./components/Themes/ThemeC";
-import ThemeF from "./components/Themes/ThemeF";
 import ThemeD from "./components/Themes/ThemeD";
 import ThemeE from "./components/Themes/ThemeE";
+import ThemeH from "./components/Themes/ThemeH";
 
 export default function App() {
   const { state, dispatch } = usePhotoSlideContext();
@@ -107,17 +107,20 @@ export default function App() {
         case "e": {
           return <ThemeE />;
         }
-        case "f": {
-          return <ThemeF />;
+        case "h": {
+          return <ThemeH />;
+        }
+        default: {
+          return <ThemeA />;
         }
       }
     }
   };
   return (
     <main>
-      <section className="cs-container py-12">
-        <h1 className="text-4xl font-bold mb-2">Module E | Photo Slide Show</h1>
-        <p className="font-bold text-zinc-500 text-xl mb-8">
+      <section className="py-12 cs-container">
+        <h1 className="mb-2 text-4xl font-bold">Module D | Photo Slide Show</h1>
+        <p className="mb-8 text-xl font-bold text-zinc-500">
           {currentMode} | {currentTheme}
         </p>
         <div className="flex items-start gap-4">

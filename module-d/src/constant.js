@@ -2,7 +2,7 @@ import { setCurrentMode, setCurrentTheme } from "./features/photo-slide/action";
 
 const modes = ["manual", "auto", "random"];
 
-const themes = ["a", "b", "c", "d", "e", "f"];
+const themes = ["a", "b", "c", "d", "e", "h"];
 
 const commands = [
   {
@@ -38,8 +38,8 @@ const commands = [
     fn: () => setCurrentTheme("e"),
   },
   {
-    name: "Switch to theme F",
-    fn: () => setCurrentTheme("f"),
+    name: "Switch to theme H",
+    fn: () => setCurrentTheme("h"),
   },
 ];
 

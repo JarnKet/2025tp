@@ -7,19 +7,37 @@
     @apply max-w-[1000px] w-11/12 mx-auto;
   }
 
+  /* 3D Transform utilities for coverflow */
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .perspective-1200 {
+    perspective: 1200px;
+  }
+
   .theme-b-animation {
     animation: theme-b-animation 300ms;
   }
+
+  .-theme-b-animation {
+    animation: -theme-b-animation 300ms;
+  }
+
   .theme-c-animation {
     transform: translateY(110%);
     animation: theme-c-animation 300ms forwards;
   }
-  .theme-f-animation {
-    animation: theme-f-animation 300ms;
+
+  .-theme-c-animation {
+    transform: translateY(-110%);
+    animation: -theme-c-animation 300ms forwards;
   }
+
   .front {
     animation: rotate-y-front 300ms;
   }
+
   .-rotate-y-front {
     animation: -rotate-y-front 300ms;
   }
@@ -28,40 +46,90 @@
     0% {
       transform: translateX(-100%);
     }
+
     100% {
       transform: translateX(0);
     }
   }
+
+  @keyframes -theme-b-animation {
+    0% {
+      transform: translateX(100%);
+    }
+
+    100% {
+      transform: translateX(0);
+    }
+  }
+
   @keyframes theme-c-animation {
     0% {
       transform: translateY(110%);
     }
+
     100% {
       transform: translateY(0);
     }
   }
-  @keyframes theme-f-animation {
+
+  @keyframes -theme-c-animation {
     0% {
-      transform: scale(0);
+      transform: translateY(-110%);
     }
+
     100% {
-      transform: scale(1);
+      transform: translateY(0);
     }
   }
+
   @keyframes rotate-y-front {
     0% {
       transform: rotateY(0);
     }
+
     100% {
       transform: rotateY(90deg);
     }
   }
+
   @keyframes -rotate-y-front {
     0% {
       transform: rotateY(0);
     }
+
     100% {
       transform: rotateY(-90deg);
+    }
+  }
+
+  /* Theme H Animations - Simple and Clean */
+  .theme-h-zoom {
+    animation: theme-h-zoom 0.6s ease-out;
+  }
+
+  .theme-h-caption-fade {
+    animation: theme-h-caption-fade 0.8s ease-out 0.2s both;
+  }
+
+  @keyframes theme-h-zoom {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes theme-h-caption-fade {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }
