@@ -1,0 +1,17 @@
+{
+  "name": "Mobile service",
+  "short_name": "MobileService",
+  "description": "A mobile web that provide essential Lyon services data.",
+  "start_url": "http://ws01.worldskills.org/01_module_d/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#333333",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "http://ws01.worldskills.org/01_module_d/vite.svg",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ]
+}
