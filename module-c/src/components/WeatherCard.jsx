@@ -1,11 +1,10 @@
 import { CLOUDY, RAINY, SUNNY } from "../assets/icon";
 
 export default function WeatherCard({ weather }) {
-  console.log(weather);
-  const { location, date, lower_temperature, upper_temperature } = weather;
+  const { location, date, lower_temperature, upper_temperature, status } = weather;
 
   const renderIcon = () => {
-    switch (weather.status) {
+    switch (status) {
       case "Cloudy": {
         return CLOUDY;
       }
@@ -15,17 +14,49 @@ export default function WeatherCard({ weather }) {
       case "Sunny": {
         return SUNNY;
       }
+      default:
+        return SUNNY;
+    }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+
+    if (date.toDateString() === today.toDateString()) {
+      return "Today";
+    } else if (date.toDateString() === tomorrow.toDateString()) {
+      return "Tomorrow";
+    } else {
+      return date.toLocaleDateString('en-US', { 
+        weekday: 'short', 
+        month: 'short', 
+        day: 'numeric' 
+      });
     }
   };
 
   return (
-    <div className="max-w-sm mx-auto bg-white dark:bg-zinc-400 rounded-2xl shadow-lg border border-gray-200 text-gray-800">
-      <h2 className="text-3xl text-center font-bold mb-2">{location}</h2>
-      <p className="text-center">{date}</p>
-      {renderIcon()}
-      <p className="text-gray-500 mb-4 text-center font-bold text-lg">
-        {lower_temperature}-{upper_temperature}C
-      </p>
+    <div className="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-md min-h-[300px] w-full">
+      <div className="text-center mb-4">
+        <h3 className="text-lg font-semibold text-gray-800">{location}</h3>
+        <p className="text-sm text-gray-600">{formatDate(date)}</p>
+      </div>
+      
+      <div className="flex-1 flex items-center justify-center mb-4">
+        <div className="weather-icon">
+          {renderIcon()}
+        </div>
+      </div>
+      
+      <div className="text-center">
+        <p className="text-2xl font-bold text-gray-800">
+          {lower_temperature}° - {upper_temperature}°C
+        </p>
+        <p className="text-sm text-gray-600 capitalize">{status}</p>
+      </div>
     </div>
   );
 }

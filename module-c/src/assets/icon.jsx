@@ -6,7 +6,7 @@ const CLOUDY = (
     viewBox="0 0 96 96"
     enable-background="new 0 0 96 96"
     xml:space="preserve"
-    className="icon-weather hover:svg-animated-stroke"
+    className="icon-weather"
   >
     <g id="Base" display="none"></g>
     <g id="Dibujo">
@@ -31,7 +31,7 @@ const RAINY = (
     viewBox="0 0 96 96"
     enable-background="new 0 0 96 96"
     xml:space="preserve"
-    className="icon-weather hover:svg-animated-stroke"
+    className="icon-weather"
   >
     <g id="Base" display="none"></g>
     <g id="Dibujo">
@@ -68,7 +68,7 @@ const SUNNY = (
     viewBox="0 0 96 96"
     enable-background="new 0 0 96 96"
     xml:space="preserve"
-    className="icon-weather hover:svg-animated-stroke"
+    className="icon-weather"
   >
     <g id="Base" display="none"></g>
     <g id="Dibujo">
